@@ -18,5 +18,6 @@ RUN sed -i 's/\r//g' /opt/startup.relational.dev.sh
 WORKDIR /usr/src/app
 RUN if [ ! -f .env ]; then cp env-example-relational .env; fi
 RUN npm run build
+ENV NODE_OPTIONS=--max_old_space_size=1024
 
 CMD ["/opt/startup.relational.dev.sh"]
