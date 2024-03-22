@@ -27,6 +27,11 @@ export class MobileSpecController {
     'Accept-CH',
     'Device-Memory,Downlink,DPR,ECT,RTT,Save-Data,Sec-CH-Device-Memory,Sec-CH-Downlink,Sec-CH-DPR,Sec-CH-ECT,Sec-CH-Forced-Colors,Sec-CH-Prefers-Color-Scheme,Sec-CH-Prefers-Contrast,Sec-CH-Prefers-Reduced-Data,Sec-CH-Prefers-Reduced-Motion,Sec-CH-Prefers-Reduced-Transparency,Sec-CH-RTT,Sec-CH-Save-Data,Sec-CH-UA,Sec-CH-UA-Arch,Sec-CH-UA-Bitness,Sec-CH-UA-Full-Version,Sec-CH-UA-Full-Version-List,Sec-CH-UA-Mobile,Sec-CH-UA-Model,Sec-CH-UA-Platform,Sec-CH-UA-Platform-Version,Sec-CH-UA-WoW64,Sec-CH-Viewport-Height,Sec-CH-Viewport-Width,Sec-CH-Width,Viewport-Height,Viewport-Width,Width',
   )
+  @Header(
+    'Critical-CH',
+    'Device-Memory,Downlink,DPR,ECT,RTT,Save-Data,Sec-CH-Device-Memory,Sec-CH-Downlink,Sec-CH-DPR,Sec-CH-ECT,Sec-CH-Forced-Colors,Sec-CH-Prefers-Color-Scheme,Sec-CH-Prefers-Contrast,Sec-CH-Prefers-Reduced-Data,Sec-CH-Prefers-Reduced-Motion,Sec-CH-Prefers-Reduced-Transparency,Sec-CH-RTT,Sec-CH-Save-Data,Sec-CH-UA,Sec-CH-UA-Arch,Sec-CH-UA-Bitness,Sec-CH-UA-Full-Version,Sec-CH-UA-Full-Version-List,Sec-CH-UA-Mobile,Sec-CH-UA-Model,Sec-CH-UA-Platform,Sec-CH-UA-Platform-Version,Sec-CH-UA-WoW64,Sec-CH-Viewport-Height,Sec-CH-Viewport-Width,Sec-CH-Width,Viewport-Height,Viewport-Width,Width',
+  )
+  @Header('Vary', 'Accept-CH')
   getHeaders(
     @Headers() headers: any,
     @Headers('Sec-CH-UA') value1: string,
