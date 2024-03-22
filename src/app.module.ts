@@ -26,6 +26,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './database/mongoose-config.service';
 import { DatabaseConfig } from './database/config/database-config.type';
+import { MobileSpecModule } from './mobile-spec/mobile-spec.module';
 
 @Module({
   imports: [
@@ -84,6 +85,7 @@ import { DatabaseConfig } from './database/config/database-config.type';
     MailModule,
     MailerModule,
     HomeModule,
+    MobileSpecModule,
   ],
 })
 export class AppModule {}
