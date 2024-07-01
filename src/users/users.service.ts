@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { EntityRepository, wrap } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: EntityRepository<User>,
+  ) {}
+
+  async create(createUserDto: CreateUserDto) {
+    return this.userRepository.create(createUserDto);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.userRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    return await this.userRepository.findOne({ userId: id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const existingUser = await this.userRepository.findOne({ userId: id });
+    wrap(existingUser).assign(updateUserDto);
+    await this.userRepository.upsert(existingUser);
+    return existingUser;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const user = await this.userRepository.findOne({ userId: id });
+    await this.userRepository.nativeDelete(user);
   }
 }

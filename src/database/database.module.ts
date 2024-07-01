@@ -18,7 +18,6 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
           driver: PostgreSqlDriver,
           entities: ['./dist/**/*.entity.js'],
           entitiesTs: ['./src/**/*.entity.ts'],
-          autoLoadEntities: true,
         };
       },
     }),
