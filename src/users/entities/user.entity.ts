@@ -12,22 +12,10 @@ export class User {
   email!: string;
 
   @Property()
-  passwordHash!: string;
-
-  @Property({ nullable: true })
-  fullName?: string;
-
-  @Property({ nullable: true, type: 'date' })
-  birthdate?: Date;
+  password!: string;
 
   @Property({ nullable: true })
   avatarUrl?: string;
-
-  @Property()
-  timezone!: string;
-
-  @Property()
-  languagePreference!: string;
 
   @Property({ onCreate: () => new Date() })
   createdAt = new Date();

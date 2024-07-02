@@ -13,14 +13,19 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    return this.userRepository.create(createUserDto);
+    const createdUser = this.userRepository.create(createUserDto);
+    return await this.userRepository.insert(createdUser);
   }
 
   async findAll() {
     return await this.userRepository.findAll();
   }
 
-  async findOne(id: number) {
+  async findOneByEmail(email: string) {
+    return await this.userRepository.findOne({ email });
+  }
+
+  async findOneById(id: number) {
     return await this.userRepository.findOne({ userId: id });
   }
 

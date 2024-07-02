@@ -33,32 +33,14 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "password_hash": {
-          "name": "password_hash",
+        "password": {
+          "name": "password",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "string"
-        },
-        "full_name": {
-          "name": "full_name",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "string"
-        },
-        "birthdate": {
-          "name": "birthdate",
-          "type": "date",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "mappedType": "date"
         },
         "avatar_url": {
           "name": "avatar_url",
@@ -67,24 +49,6 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "mappedType": "string"
-        },
-        "timezone": {
-          "name": "timezone",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "language_preference": {
-          "name": "language_preference",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
           "mappedType": "string"
         },
         "created_at": {
