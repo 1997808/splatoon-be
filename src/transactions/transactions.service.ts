@@ -1,26 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { EntityRepository, wrap } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { Transaction } from './entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
-  create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+  constructor(
+    @InjectRepository(Transaction)
+    private readonly transactionRepository: EntityRepository<Transaction>,
+  ) {}
+
+  async create(createTransactionDto: CreateTransactionDto) {
+    const createdTransaction =
+      this.transactionRepository.create(createTransactionDto);
+    return await this.transactionRepository.insert(createdTransaction);
   }
 
-  findAll() {
-    return `This action returns all transactions`;
+  async findAll() {
+    return await this.transactionRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} transaction`;
+  async findOneById(id: number) {
+    return await this.transactionRepository.findOne({ id });
   }
 
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
+  async update(id: number, updateTransactionDto: UpdateTransactionDto) {
+    const existingTransaction = await this.transactionRepository.findOne({
+      id,
+    });
+    wrap(existingTransaction).assign(updateTransactionDto);
+    await this.transactionRepository.upsert(existingTransaction);
+    return existingTransaction;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+  async remove(id: number) {
+    const transaction = await this.transactionRepository.findOne({ id });
+    await this.transactionRepository.nativeDelete(transaction);
   }
 }

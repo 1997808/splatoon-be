@@ -26,18 +26,18 @@ export class UsersService {
   }
 
   async findOneById(id: number) {
-    return await this.userRepository.findOne({ userId: id });
+    return await this.userRepository.findOne({ id });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const existingUser = await this.userRepository.findOne({ userId: id });
+    const existingUser = await this.userRepository.findOne({ id });
     wrap(existingUser).assign(updateUserDto);
     await this.userRepository.upsert(existingUser);
     return existingUser;
   }
 
   async remove(id: number) {
-    const user = await this.userRepository.findOne({ userId: id });
+    const user = await this.userRepository.findOne({ id });
     await this.userRepository.nativeDelete(user);
   }
 }

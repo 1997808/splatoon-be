@@ -31,7 +31,7 @@ export class AuthService {
     }
     const payload: TokenPayloadDto = {
       email: user.email,
-      userId: user.userId,
+      userId: user.id,
       username: user.username,
     };
     return {

@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { EntityRepository, wrap } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { Category } from './entities/category.entity';
 
 @Injectable()
 export class CategoryService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  constructor(
+    @InjectRepository(Category)
+    private readonly categoryRepository: EntityRepository<Category>,
+  ) {}
+
+  async create(createCategoryDto: CreateCategoryDto) {
+    const createdCategory = this.categoryRepository.create(createCategoryDto);
+    return await this.categoryRepository.insert(createdCategory);
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAll() {
+    return await this.categoryRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOneById(id: number) {
+    return await this.categoryRepository.findOne({ id });
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    const existingCategory = await this.categoryRepository.findOne({ id });
+    wrap(existingCategory).assign(updateCategoryDto);
+    await this.categoryRepository.upsert(existingCategory);
+    return existingCategory;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number) {
+    const category = await this.categoryRepository.findOne({ id });
+    await this.categoryRepository.nativeDelete(category);
   }
 }
