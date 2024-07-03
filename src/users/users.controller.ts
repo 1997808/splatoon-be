@@ -12,7 +12,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
-import { AuthUser } from '../auth/user.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
@@ -28,8 +27,7 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(@AuthUser() user: any) {
-    console.log(user, '================');
+  async findAll() {
     return await this.usersService.findAll();
   }
 

@@ -3,7 +3,7 @@ import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 @Entity()
 export class User {
   @PrimaryKey()
-  userId!: number;
+  id!: number;
 
   @Property({ unique: true })
   username!: string;
