@@ -6,6 +6,7 @@ import { ResponseInterceptor } from './response/response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('Splatoon example')
     .setVersion('1.0')
