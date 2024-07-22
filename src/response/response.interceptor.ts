@@ -49,7 +49,7 @@ export class ResponseInterceptor implements NestInterceptor {
       status: true,
       path: request.url,
       statusCode,
-      result: res,
+      data: res,
     };
   }
 }
