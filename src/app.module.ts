@@ -10,7 +10,15 @@ import { CategoryModule } from './category/category.module';
 import { AssetsModule } from './assets/assets.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), DatabaseModule, UsersModule, AuthModule, TransactionsModule, CategoryModule, AssetsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    DatabaseModule,
+    UsersModule,
+    AuthModule,
+    TransactionsModule,
+    CategoryModule,
+    AssetsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
