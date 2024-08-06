@@ -17,8 +17,8 @@ export class BalancesService {
     return await this.balanceRepository.insert(createdBalance);
   }
 
-  async findAll() {
-    return await this.balanceRepository.findAll();
+  async findAll(userId: number) {
+    return await this.balanceRepository.find({ user: userId });
   }
 
   async findOneById(id: number) {

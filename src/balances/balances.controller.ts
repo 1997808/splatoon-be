@@ -31,8 +31,8 @@ export class BalancesController {
   }
 
   @Get()
-  findAll() {
-    return this.balancesService.findAll();
+  findAll(@AuthUser() user: any) {
+    return this.balancesService.findAll(user.userId);
   }
 
   @Get(':id')
