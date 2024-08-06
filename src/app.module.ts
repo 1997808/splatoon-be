@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { CategoryModule } from './category/category.module';
 import { BalancesModule } from './balances/balances.module';
+import { BudgetsModule } from './budgets/budgets.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BalancesModule } from './balances/balances.module';
     TransactionsModule,
     CategoryModule,
     BalancesModule,
+    BudgetsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
