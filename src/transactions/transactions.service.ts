@@ -15,11 +15,7 @@ export class TransactionsService {
   async create(createTransactionDto: CreateTransactionDto) {
     const createdTransaction =
       this.transactionRepository.create(createTransactionDto);
-    return await this.transactionRepository.insert({
-      ...createdTransaction,
-      user: createTransactionDto.userId,
-      category: createTransactionDto.categoryId,
-    });
+    return await this.transactionRepository.insert(createdTransaction);
   }
 
   async findAll() {

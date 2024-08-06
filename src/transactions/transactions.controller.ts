@@ -29,7 +29,7 @@ export class TransactionsController {
   ) {
     return this.transactionsService.create({
       ...createTransactionDto,
-      userId: user.userId,
+      user: user.userId,
     });
   }
 

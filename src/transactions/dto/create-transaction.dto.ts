@@ -3,7 +3,8 @@ export class CreateTransactionDto {
   description?: string;
   amount: number;
   type: 'income' | 'expense';
-  userId: number;
-  categoryId: number;
+  user: number;
+  category: number;
+  balance: number;
   transactionDate: Date;
 }

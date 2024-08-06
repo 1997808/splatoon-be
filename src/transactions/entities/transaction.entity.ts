@@ -1,6 +1,7 @@
 import { Entity, PrimaryKey, Property, ManyToOne, Enum } from '@mikro-orm/core';
 import { User } from '../../users/entities/user.entity';
 import { Category } from '../../category/entities/category.entity';
+import { Balance } from '../../balances/entities/balance.entity';
 
 @Entity()
 export class Transaction {
@@ -18,6 +19,9 @@ export class Transaction {
 
   @Enum({ items: () => TransactionType })
   type!: 'income' | 'expense';
+
+  @ManyToOne(() => Balance)
+  balance!: Balance;
 
   @ManyToOne(() => User)
   user!: User;

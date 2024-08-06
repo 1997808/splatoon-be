@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { CategoryModule } from './category/category.module';
-import { AssetsModule } from './assets/assets.module';
+import { BalancesModule } from './balances/balances.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { AssetsModule } from './assets/assets.module';
     AuthModule,
     TransactionsModule,
     CategoryModule,
-    AssetsModule,
+    BalancesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
