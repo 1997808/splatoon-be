@@ -18,7 +18,10 @@ export class BillsService {
   }
 
   async findAll(userId: number) {
-    return await this.billRepository.find({ user: userId });
+    return await this.billRepository.find(
+      { user: userId },
+      { populate: ['balance'] },
+    );
   }
 
   async findOneById(id: number) {
