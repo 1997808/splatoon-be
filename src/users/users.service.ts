@@ -32,8 +32,10 @@ export class UsersService {
   async update(id: number, updateUserDto: UpdateUserDto) {
     const existingUser = await this.userRepository.findOne({ id });
     wrap(existingUser).assign(updateUserDto);
-    await this.userRepository.upsert(existingUser);
-    return existingUser;
+    const result = await this.userRepository
+      .getEntityManager()
+      .persistAndFlush(existingUser);
+    return result;
   }
 
   async remove(id: number) {

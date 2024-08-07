@@ -28,8 +28,10 @@ export class CategoryService {
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const existingCategory = await this.categoryRepository.findOne({ id });
     wrap(existingCategory).assign(updateCategoryDto);
-    await this.categoryRepository.upsert(existingCategory);
-    return existingCategory;
+    const result = await this.categoryRepository
+      .getEntityManager()
+      .persistAndFlush(existingCategory);
+    return result;
   }
 
   async remove(id: number) {

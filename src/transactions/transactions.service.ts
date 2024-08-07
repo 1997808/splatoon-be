@@ -31,8 +31,10 @@ export class TransactionsService {
       id,
     });
     wrap(existingTransaction).assign(updateTransactionDto);
-    await this.transactionRepository.upsert(existingTransaction);
-    return existingTransaction;
+    const result = await this.transactionRepository
+      .getEntityManager()
+      .persistAndFlush(existingTransaction);
+    return result;
   }
 
   async remove(id: number) {

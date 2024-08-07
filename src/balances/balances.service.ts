@@ -28,8 +28,10 @@ export class BalancesService {
   async update(id: number, updateBalanceDto: UpdateBalanceDto) {
     const existingBalance = await this.balanceRepository.findOne({ id });
     wrap(existingBalance).assign(updateBalanceDto);
-    await this.balanceRepository.upsert(existingBalance);
-    return existingBalance;
+    const result = await this.balanceRepository
+      .getEntityManager()
+      .persistAndFlush(existingBalance);
+    return result;
   }
 
   async remove(id: number) {

@@ -24,8 +24,10 @@ export class BudgetsService {
   async update(id: number, updateBudgetDto: UpdateBudgetDto) {
     const existingBudget = await this.budgetRepository.findOne({ id });
     wrap(existingBudget).assign(updateBudgetDto);
-    await this.budgetRepository.upsert(existingBudget);
-    return existingBudget;
+    const result = await this.budgetRepository
+      .getEntityManager()
+      .persistAndFlush(existingBudget);
+    return result;
   }
 
   async remove(id: number) {

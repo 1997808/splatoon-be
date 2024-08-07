@@ -33,8 +33,10 @@ export class BillsService {
       throw new Error('Bill not found');
     }
     wrap(existingBill).assign(updateBillDto);
-    await this.billRepository.upsert(existingBill);
-    return existingBill;
+    const result = await this.billRepository
+      .getEntityManager()
+      .persistAndFlush(existingBill);
+    return result;
   }
 
   async remove(id: number) {
