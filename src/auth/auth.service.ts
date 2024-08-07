@@ -38,7 +38,9 @@ export class AuthService {
       username: user.username,
     };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.signAsync(payload, {
+        expiresIn: '8h',
+      }),
     };
   }
 }
