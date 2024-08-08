@@ -20,7 +20,7 @@ export class BillsService {
   async findAll(userId: number) {
     return await this.billRepository.find(
       { user: userId },
-      { populate: ['balance'] },
+      { populate: ['balance'], orderBy: { dueDate: 'ASC' } },
     );
   }
 
