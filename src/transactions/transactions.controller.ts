@@ -38,6 +38,11 @@ export class TransactionsController {
     return this.transactionsService.findAll();
   }
 
+  @Get('monthly')
+  getMonthlyCategorySums(@AuthUser() user: any) {
+    return this.transactionsService.getMonthlyCategorySums(user.userId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.transactionsService.findOneById(+id);

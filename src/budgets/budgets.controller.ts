@@ -30,6 +30,11 @@ export class BudgetsController {
     });
   }
 
+  @Post('init')
+  initBudget(@AuthUser() user: any) {
+    return this.budgetsService.initBudgets(user.userId);
+  }
+
   @Get()
   findOne(@AuthUser() user: any) {
     return this.budgetsService.findOne(user.userId);
