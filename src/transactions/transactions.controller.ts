@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -14,6 +15,7 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { AuthUser } from '../auth/user.decorator';
+import { PageOptionsDto } from '../util/page.dto';
 
 @ApiBearerAuth()
 @ApiTags('transactions')
@@ -34,8 +36,8 @@ export class TransactionsController {
   }
 
   @Get()
-  findAll() {
-    return this.transactionsService.findAll();
+  findAll(@Query() pageOptionsDto: PageOptionsDto) {
+    return this.transactionsService.findAll(pageOptionsDto);
   }
 
   @Get('month-category')

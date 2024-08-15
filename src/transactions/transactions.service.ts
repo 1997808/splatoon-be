@@ -5,6 +5,7 @@ import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Transaction } from './entities/transaction.entity';
 import { EntityManager } from '@mikro-orm/postgresql';
+import { PageDto, PageMetaDto, PageOptionsDto } from '../util/page.dto';
 
 @Injectable()
 export class TransactionsService {
@@ -20,8 +21,19 @@ export class TransactionsService {
     return await this.transactionRepository.insert(createdTransaction);
   }
 
-  async findAll() {
-    return await this.transactionRepository.findAll();
+  async findAll(pageOptionsDto: PageOptionsDto) {
+    const { order, take, skip } = pageOptionsDto;
+    const result = await this.em
+      .createQueryBuilder(Transaction)
+      .select('*')
+      .limit(take, skip)
+      .orderBy({ id: order })
+      .getResultAndCount();
+    const pageMetaDto = new PageMetaDto({
+      itemCount: result[1],
+      pageOptionsDto,
+    });
+    return new PageDto(result[0], pageMetaDto);
   }
 
   async findOneById(id: number) {
