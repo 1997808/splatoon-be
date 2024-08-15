@@ -44,6 +44,28 @@ export class TransactionsService {
     await this.transactionRepository.nativeDelete(transaction);
   }
 
+  async getMonthlyCategory(userId: number) {
+    const sum = await this.getMonthlyCategorySums(userId);
+    const top = await this.getTopTwoExpensesPerCategory(userId);
+    const result = sum.map((category) => {
+      const expenses = top
+        .filter((expense) => expense.category_name === category.category_name)
+        .map((expense) => ({
+          id: expense.id,
+          item: expense.item,
+          amount: parseFloat(expense.amount),
+          createdDate: expense.transaction_date,
+        }));
+
+      return {
+        category: category.category_name,
+        totalAmount: parseFloat(category.total_amount),
+        data: expenses,
+      };
+    });
+    return result;
+  }
+
   async getMonthlyCategorySums(userId: number) {
     const result = await this.em.execute(
       `
@@ -58,6 +80,7 @@ export class TransactionsService {
         LEFT JOIN 
             transaction t ON t.category_id = c.id AND
             t.user_id = ? AND
+            t.type = 'expense' AND
             DATE_TRUNC('month', t.transaction_date) = DATE_TRUNC('month', CURRENT_DATE)
         GROUP BY 
             CASE 

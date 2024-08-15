@@ -38,9 +38,9 @@ export class TransactionsController {
     return this.transactionsService.findAll();
   }
 
-  @Get('monthly')
+  @Get('month-category')
   getMonthlyCategorySums(@AuthUser() user: any) {
-    return this.transactionsService.getMonthlyCategorySums(user.userId);
+    return this.transactionsService.getMonthlyCategory(user.userId);
   }
 
   @Get(':id')
