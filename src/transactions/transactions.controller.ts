@@ -40,8 +40,13 @@ export class TransactionsController {
     return this.transactionsService.findAll(pageOptionsDto);
   }
 
+  @Get('month-sum')
+  getMonthlySum(@AuthUser() user: any) {
+    return this.transactionsService.getMonthlyCategorySums(user.userId);
+  }
+
   @Get('month-category')
-  getMonthlyCategorySums(@AuthUser() user: any) {
+  getMonthlyCategory(@AuthUser() user: any) {
     return this.transactionsService.getMonthlyCategory(user.userId);
   }
 

@@ -28,7 +28,7 @@ export class BillsService {
       .where({ user: userId })
       .leftJoinAndSelect('balance', 'balance')
       .limit(take, skip)
-      .orderBy({ id: order })
+      .orderBy({ dueDate: order })
       .getResultAndCount();
     const pageMetaDto = new PageMetaDto({
       itemCount: result[1],
