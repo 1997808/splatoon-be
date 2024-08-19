@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { BillsService } from './bills.service';
 import { CreateBillDto } from './dto/create-bill.dto';
@@ -14,6 +15,7 @@ import { UpdateBillDto } from './dto/update-bill.dto';
 import { AuthUser } from '../auth/user.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
+import { PageOptionsDto } from '../util/page.dto';
 
 @ApiBearerAuth()
 @ApiTags('bills')
@@ -31,8 +33,8 @@ export class BillsController {
   }
 
   @Get()
-  findAll(@AuthUser() user: any) {
-    return this.billsService.findAll(user.userId);
+  findAll(@Query() pageOptionsDto: PageOptionsDto, @AuthUser() user: any) {
+    return this.billsService.findAll(pageOptionsDto, user.userId);
   }
 
   @Get(':id')
