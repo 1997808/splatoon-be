@@ -90,6 +90,24 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "theme": {
+          "name": "theme",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
         "avatar_url": {
           "name": "avatar_url",
           "type": "varchar(255)",

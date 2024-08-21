@@ -11,5 +11,11 @@ export class CreateUserDto {
   password: string;
 
   @ApiPropertyOptional()
+  currency?: string;
+
+  @ApiPropertyOptional()
+  theme?: string;
+
+  @ApiPropertyOptional()
   avatarUrl?: string;
 }

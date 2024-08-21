@@ -26,7 +26,7 @@ export class UsersService {
   }
 
   async findOneById(id: number) {
-    return await this.userRepository.findOne({ id });
+    return await this.userRepository.findOne({ id }, { exclude: ['password'] });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

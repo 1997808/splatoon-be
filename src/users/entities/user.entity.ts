@@ -15,6 +15,12 @@ export class User {
   password!: string;
 
   @Property({ nullable: true })
+  currency?: string;
+
+  @Property({ nullable: true })
+  theme?: string;
+
+  @Property({ nullable: true })
   avatarUrl?: string;
 
   @Property({ onCreate: () => new Date() })
