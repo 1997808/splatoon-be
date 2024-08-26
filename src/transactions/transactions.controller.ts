@@ -36,8 +36,8 @@ export class TransactionsController {
   }
 
   @Get()
-  findAll(@Query() pageOptionsDto: PageOptionsDto) {
-    return this.transactionsService.findAll(pageOptionsDto);
+  findAll(@Query() pageOptionsDto: PageOptionsDto, @AuthUser() user: any) {
+    return this.transactionsService.findAll(pageOptionsDto, user.userId);
   }
 
   @Get('month-sum')

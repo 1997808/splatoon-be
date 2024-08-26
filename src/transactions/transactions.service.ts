@@ -21,13 +21,15 @@ export class TransactionsService {
     return await this.transactionRepository.insert(createdTransaction);
   }
 
-  async findAll(pageOptionsDto: PageOptionsDto) {
+  async findAll(pageOptionsDto: PageOptionsDto, userId?: number) {
     const { order, take, skip } = pageOptionsDto;
     const result = await this.em
       .createQueryBuilder(Transaction)
       .select('*')
+      .where({ user: userId })
+      .leftJoinAndSelect('balance', 'balance')
       .limit(take, skip)
-      .orderBy({ id: order })
+      .orderBy({ transactionDate: order })
       .getResultAndCount();
     const pageMetaDto = new PageMetaDto({
       itemCount: result[1],
