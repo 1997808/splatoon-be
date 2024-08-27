@@ -26,18 +26,20 @@ export class UsersService {
   }
 
   async findOneById(id: number) {
-    return await this.userRepository.findOne({ userId: id });
+    return await this.userRepository.findOne({ id }, { exclude: ['password'] });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const existingUser = await this.userRepository.findOne({ userId: id });
+    const existingUser = await this.userRepository.findOne({ id });
     wrap(existingUser).assign(updateUserDto);
-    await this.userRepository.upsert(existingUser);
-    return existingUser;
+    const result = await this.userRepository
+      .getEntityManager()
+      .persistAndFlush(existingUser);
+    return result;
   }
 
   async remove(id: number) {
-    const user = await this.userRepository.findOne({ userId: id });
+    const user = await this.userRepository.findOne({ id });
     await this.userRepository.nativeDelete(user);
   }
 }

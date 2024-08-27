@@ -23,19 +23,24 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto): Promise<any> {
-    const { email, password: pass } = loginDto;
+    const { email, password } = loginDto;
     const user = await this.usersService.findOneByEmail(email);
-    const isPasswordMatching = await bcrypt.compare(pass, user.password);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const isPasswordMatching = await bcrypt.compare(password, user.password);
     if (!isPasswordMatching) {
       throw new UnauthorizedException('Invalid credentials');
     }
     const payload: TokenPayloadDto = {
       email: user.email,
-      userId: user.userId,
+      userId: user.id,
       username: user.username,
     };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.signAsync(payload, {
+        expiresIn: '8h',
+      }),
     };
   }
 }
