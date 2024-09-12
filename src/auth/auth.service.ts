@@ -38,6 +38,14 @@ export class AuthService {
       username: user.username,
     };
     return {
+      profile: {
+        username: user.username,
+        email: user.email,
+        id: user.id,
+        avatarUrl: user.avatarUrl,
+        currency: user.currency,
+        theme: user.theme,
+      },
       access_token: await this.jwtService.signAsync(payload, {
         expiresIn: '8h',
       }),
