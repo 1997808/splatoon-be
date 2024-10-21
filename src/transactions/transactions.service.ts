@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { EntityRepository, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { Transaction } from './entities/transaction.entity';
 import { EntityManager } from '@mikro-orm/postgresql';
+import { Injectable } from '@nestjs/common';
 import { PageDto, PageMetaDto, PageOptionsDto } from '../util/page.dto';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { Transaction } from './entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
@@ -19,6 +19,20 @@ export class TransactionsService {
     const createdTransaction =
       this.transactionRepository.create(createTransactionDto);
     return await this.transactionRepository.insert(createdTransaction);
+  }
+
+  async createMany(
+    createTransactionDtos: CreateTransactionDto[],
+    userId: number,
+  ) {
+    const transactions = createTransactionDtos.map((dto) =>
+      this.transactionRepository.create({ ...dto, user: userId }),
+    );
+
+    await this.transactionRepository
+      .getEntityManager()
+      .persistAndFlush(transactions);
+    return transactions;
   }
 
   async findAll(pageOptionsDto: PageOptionsDto, userId?: number) {

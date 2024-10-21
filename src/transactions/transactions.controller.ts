@@ -1,21 +1,21 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  UseGuards,
+  Get,
+  Param,
+  Patch,
+  Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { TransactionsService } from './transactions.service';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { AuthUser } from '../auth/user.decorator';
 import { PageOptionsDto } from '../util/page.dto';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { TransactionsService } from './transactions.service';
 
 @ApiBearerAuth()
 @ApiTags('transactions')
@@ -23,6 +23,17 @@ import { PageOptionsDto } from '../util/page.dto';
 @UseGuards(JwtAuthGuard)
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
+
+  @Post('many')
+  createMany(
+    @Body() createTransactionDtos: CreateTransactionDto[],
+    @AuthUser() user: any,
+  ) {
+    return this.transactionsService.createMany(
+      createTransactionDtos,
+      user.userId,
+    );
+  }
 
   @Post()
   create(
